@@ -59,6 +59,15 @@ export const BTN_PAY_RETRY = '重新发起';
 export const BTN_PAY_CLOSE = '关闭';
 export const PAY_NOTICE = '支付完成后请勿立即关闭窗口，系统将在数秒内自动确认。';
 
+/** 审核测试码兑换（微软商店审核员专用入口，10.3.3 App Is Testable）。 */
+export const REVIEW_CODE_LABEL = '审核测试码';
+export const REVIEW_CODE_PLACEHOLDER = '请输入测试码';
+export const BTN_REVIEW_CODE_REDEEM = '兑换开通';
+export const REVIEW_CODE_CHECKING = '正在验证测试码…';
+export const REVIEW_CODE_SUCCESS = '测试码验证通过，已开通导出功能（完整版）';
+export const REVIEW_CODE_INVALID = '测试码无效，请核对后重试';
+export const REVIEW_CODE_FAILED = '验证失败，请稍后重试';
+
 /** 参数面板卡片标题。 */
 export const CARD_SHAPE = '形状与类型';
 export const CARD_BORDER = '边框';
