@@ -474,7 +474,7 @@ onBeforeUnmount(() => {
   min-width: 0;
   height: 30px;
   padding: 0 var(--space-2);
-  border: 1px solid var(--outline-card);
+  border: 1px solid var(--studio-border);
   border-radius: var(--radius-base);
   background-color: var(--white);
   color: var(--color-foreground);
@@ -485,7 +485,8 @@ onBeforeUnmount(() => {
 }
 
 .pay__review-input:focus {
-  border-color: var(--fg-30);
+  border-color: var(--accent-ring);
+  box-shadow: 0 0 0 2px var(--accent-soft);
 }
 
 .pay__review-input:disabled {

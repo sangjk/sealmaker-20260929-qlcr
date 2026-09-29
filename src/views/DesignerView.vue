@@ -14,12 +14,12 @@ import { DISCLAIMER_DESIGN } from '@/core/copy';
 
 <template>
   <div class="designer">
-    <ParamPanel />
     <section class="designer__main">
       <PreviewStage />
       <ExportBar />
       <p class="designer__disclaimer">{{ DISCLAIMER_DESIGN }}</p>
     </section>
+    <ParamPanel />
   </div>
 </template>
 

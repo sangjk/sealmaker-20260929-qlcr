@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   min-height: 0;
   flex: 1 1 auto;
-  background-color: var(--color-surface);
+  background-color: var(--paper-50);
   border-radius: var(--radius-base);
   outline: 1px solid var(--outline-card);
   overflow: hidden;
@@ -153,7 +153,7 @@ onBeforeUnmount(() => {
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--card-padding-compact);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--studio-border);
 }
 
 .stage__title {
@@ -167,9 +167,9 @@ onBeforeUnmount(() => {
 .stage__tag {
   font-size: 12px;
   line-height: 16px;
-  color: var(--color-blue);
+  color: var(--accent-strong);
   padding: 1px 8px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--studio-border-strong);
   border-radius: var(--radius-badge);
 }
 
@@ -190,6 +190,12 @@ onBeforeUnmount(() => {
   justify-content: center;
   padding: 32px;
   overflow: auto;
+  background-color: var(--paper-50);
+  background-image: radial-gradient(
+    circle at 50% 42%,
+    color-mix(in srgb, var(--paper-100) 60%, transparent),
+    transparent 70%
+  );
 }
 
 .stage__box {

@@ -2,13 +2,20 @@
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import UnlockBadge from '@/components/payment/UnlockBadge.vue';
-import { APP_NAME, NAV_ABOUT, NAV_DESIGNER } from '@/core/copy';
+import { NAV_ABOUT, NAV_DESIGNER } from '@/core/copy';
 
 /**
- * 顶部栏：产品名 + 解锁徽标 + 关于入口。
+ * 顶部栏：品牌印记（Logo + 产品名）+ 解锁徽标 + 关于入口。
  *
- * 全部文案取自 `core/copy.ts`（禁用词单一防线）。
+ * ★ 产品名直接写入 UI（本轮「印章制作软件」），不由 core/copy.ts 注入，
+ *   以保持业务核心只读；导航文案仍取自 core/copy.ts（禁用词单一防线）。
  */
+
+/** 本轮产品名（UI 内产品名，按 TASK.md 应用）。 */
+const PRODUCT_NAME = '印章制作软件';
+
+/** 品牌 Logo 资源地址（避免模板内使用 import.meta）。 */
+const logoUrl = `${import.meta.env.BASE_URL}brand-logo.png`;
 
 const route = useRoute();
 
@@ -18,8 +25,16 @@ const onAbout = computed<boolean>(() => route.name === 'about');
 
 <template>
   <header class="app-header">
-    <h1 class="app-header__title">{{ APP_NAME }}</h1>
-    <nav class="app-header__nav" :aria-label="APP_NAME">
+    <div class="app-header__brand">
+      <img
+        class="app-header__logo"
+        :src="logoUrl"
+        :alt="`${PRODUCT_NAME} 标志`"
+        draggable="false"
+      />
+      <h1 class="app-header__title">{{ PRODUCT_NAME }}</h1>
+    </div>
+    <nav class="app-header__nav" :aria-label="PRODUCT_NAME">
       <RouterLink class="app-header__link" :class="{ 'is-active': !onAbout }" to="/designer">
         {{ NAV_DESIGNER }}
       </RouterLink>
@@ -42,16 +57,32 @@ const onAbout = computed<boolean>(() => route.name === 'about');
   height: var(--header-height);
   padding: 0 var(--space-5);
   background-color: var(--color-background);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--studio-border);
   box-shadow: var(--shadow-subtle);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-right: var(--space-5);
+  border-right: 1px solid var(--studio-border);
+}
+
+.app-header__logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  user-select: none;
 }
 
 .app-header__title {
   margin: 0;
   font-size: var(--text-sm);
   line-height: var(--text-sm-lh);
-  font-weight: var(--weight-medium);
-  letter-spacing: 0.02em;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
   color: var(--color-foreground);
   white-space: nowrap;
 }
@@ -87,8 +118,8 @@ const onAbout = computed<boolean>(() => route.name === 'about');
 }
 
 .app-header__link.is-active {
-  background-color: var(--fg-8);
-  color: var(--color-foreground);
+  background-color: var(--accent-soft);
+  color: var(--accent-strong);
 }
 
 .app-header__right {

@@ -1,11 +1,17 @@
 /*
- * Paper Design 全量设计 Token（架构设计 §1.2 / ADR-008 / 规则/UI规则.md）。
+ * Seal Atelier 全量设计 Token —— 本轮视觉语言：朱砂宣纸 / 暖中性 / Editorial 印坊风。
  *
  * ★ 纪律：
  *   1. 组件中**禁止**出现任何裸 hex / rgb 值，一律引用本文件的 Token。
  *      唯一豁免：`src/core/palette.ts` 的 7 色印色（业务数据，非 UI Token）。
  *   2. 暗色模式**自动**解析 —— 组件永远不手工切换颜色，只引用语义 Token。
  *   3. 圆角只允许取自 --radius-* 标尺；阴影优先用 outline 替代。
+ *
+ * ★ 本轮相对上一轮（Fluent 蓝）的 Token 重定义（满足「非仅改色值」）：
+ *   - 主色系：蓝 → 朱砂红（--accent / --color-blue 别名）
+ *   - 圆角标尺：6px 基准 → 2~4px 精准印刷感（--radius-* 全套重定义）
+ *   - 阴影：冷灰细阴影 → 暖棕柔光（--shadow-* 全套重定义）
+ *   - 面板皮肤：--win-*（Fluent 灰） → --studio-*（宣纸暖面 + 朱砂强调）
  */
 
 :root {
@@ -13,28 +19,34 @@
 
   /* ══════════════ 核心色板（原始值，仅供语义 Token 引用） ══════════════ */
 
-  /* Paper（暖白） */
-  --paper-50: #fcfcf9;
-  --paper-100: #efefe4;
-  --paper-200: #dedecb;
+  /* Paper（暖白 / 宣纸） */
+  --paper-50: #fbf8f1;
+  --paper-100: #f1ebde;
+  --paper-200: #e6ddcc;
 
-  /* Gray（暖中性） */
-  --gray-50: #f5f5f2;
-  --gray-100: #eaeae7;
-  --gray-200: #d7d7d6;
-  --gray-300: #c1c1c0;
-  --gray-400: #a8a8a8;
-  --gray-500: #909090;
-  --gray-600: #666666;
-  --gray-700: #5b5b5b;
-  --gray-800: #424242;
-  --gray-900: #2c2c2c;
-  --gray-950: #222222;
+  /* Gray（暖中性墨） */
+  --gray-50: #f4f0e8;
+  --gray-100: #ebe5d8;
+  --gray-200: #ddd5c4;
+  --gray-300: #c7bda8;
+  --gray-400: #a89e88;
+  --gray-500: #8c8071;
+  --gray-600: #6b6253;
+  --gray-700: #564f43;
+  --gray-800: #3c372e;
+  --gray-900: #2b2620;
+  --gray-950: #211d18;
 
-  /* Blue（强调） */
-  --blue-300: #a4c6f7;
-  --blue-400: #81adec;
-  --blue-500: #5d8cd7;
+  /* Accent（朱砂红 / Cinnabar）—— 本轮主色系 */
+  --accent-300: #dd8a7c;
+  --accent-400: #c2402f;
+  --accent-500: #a8331f;
+  --accent-600: #8f2a18;
+
+  /* 兼容别名：上一轮部分组件直引 --blue-* 作为强调色，本轮映射为朱砂红 */
+  --blue-300: var(--accent-300);
+  --blue-400: var(--accent-400);
+  --blue-500: var(--accent-500);
 
   /* Base */
   --black: #000000;
@@ -57,11 +69,16 @@
   --color-border: var(--paper-200);
   --color-border-dark: var(--gray-900);
 
-  /* ══════════════ 语义 Token · 强调 / 交互 ══════════════ */
-  --color-blue: var(--blue-400);
-  --color-light-blue: var(--blue-300);
-  --color-focus: #81adec;
-  --color-selection: rgba(138, 185, 255, 0.5);
+  /* ══════════════ 语义 Token · 强调 / 交互（朱砂红） ══════════════ */
+  --accent: var(--accent-400);
+  --accent-strong: var(--accent-500);
+  --accent-soft: rgba(194, 64, 47, 0.14);
+  --accent-ring: var(--accent-400);
+  /* 兼容别名：上一轮组件统一引用 --color-blue 作为强调色，本轮将其映射为朱砂红 */
+  --color-blue: var(--accent);
+  --color-light-blue: var(--accent-300);
+  --color-focus: var(--accent-ring);
+  --color-selection: rgba(194, 64, 47, 0.28);
 
   /* ══════════════ 透明叠层（outline-first 的基础） ══════════════ */
   --fg-4: color-mix(in srgb, var(--color-foreground) 4%, transparent);
@@ -100,18 +117,21 @@
   --color-border-danger: #be123c;
   --color-border-warning: #ea580c;
 
-  /* ══════════════ 圆角标尺（6px 基准，禁止任意值） ══════════════ */
+  /* ══════════════ 圆角标尺（本轮重定义：2~4px 精准印刷感，禁止任意值） ══════════════ */
   --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-base: 6px;
-  --radius-badge: 8px;
+  --radius-sm: 3px;
+  --radius-base: 4px;
+  --radius-md: 6px;
+  --radius-badge: 6px;
+  --radius-lg: 10px;
   --radius-full: 9999px;
 
-  /* ══════════════ 阴影（克制使用，优先 outline） ══════════════ */
-  --shadow-subtle: 0 1px 0 0 rgba(0, 0, 0, 0.08);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.06);
-  --shadow-button: inset 0 1px rgba(255, 255, 255, 0.12), inset 0 -1px rgba(0, 0, 0, 0.12);
+  /* ══════════════ 阴影（本轮重定义：暖棕柔光，克制使用，优先 outline） ══════════════ */
+  --shadow-subtle: 0 1px 2px rgba(70, 50, 35, 0.05);
+  --shadow-sm: 0 4px 14px rgba(70, 50, 35, 0.1);
+  --shadow-card: 0 1px 2px rgba(70, 50, 35, 0.06);
+  --shadow-button: inset 0 1px rgba(255, 255, 255, 0.45), inset 0 -1px rgba(0, 0, 0, 0.1);
+  --shadow-float: 0 12px 32px rgba(70, 50, 35, 0.16);
 
   /* ══════════════ 排版 ══════════════ */
   --font-sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei',
@@ -152,7 +172,7 @@
   /*
    * 卡片内边距。
    * 说明：UI规则给出的 30/40/60px 面向营销落地页；本项目是**桌面高密度工具界面**
-   * （左侧 12 张参数卡片需同屏可达），故参数卡片使用 --card-padding-compact，
+   * （右侧检查器多张卡片需同屏可达），故参数卡片使用 --card-padding-compact，
    * 内容型区块（关于页 / 支付弹窗）仍使用 --card-padding。两者均为 4px 倍数。
    */
   --card-padding: 30px;
@@ -165,32 +185,28 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --transition-interactive: var(--duration-interactive) ease-out;
 
-  /* ══════════════ 布局 ══════════════ */
-  --header-height: 56px;
-  --panel-width: 380px;
-  --hairline: 1px;
-
   /* ════════════════════════════════════════════════════════════════
-   * 现代 Windows / Fluent 风格面板皮肤（左侧参数面板专用，见 ParamPanel.vue）
-   * 仅作用于 .panel 内部，右侧预览 / 弹窗不受影响。
-   * 复用整体主题 Token（--color-blue / --radius-* / --shadow-*）以保证视觉统一。
-   * ════════════════════════════════════════════════════════════════ */
-  --win-face: #ebebeb; /* 面板中性灰底 */
-  --win-surface: #ffffff; /* 卡片 / 输入白底 */
-  --win-surface-2: #f4f4f4; /* 悬停 / 选中浅底 */
-  --win-border: #d6d6d6; /* 1px 描边 */
-  --win-border-strong: #c2c2c2;
-  --win-text: #1f1f1f;
-  --win-text-dim: #5c5c5c;
-  --win-accent: var(--color-blue); /* 复用整体主题强调蓝 #81adec */
-  --win-accent-strong: var(--blue-500); /* 略深，用于填充主按钮 / 选中态 */
-  --win-accent-soft: var(--color-selection); /* rgba(138,185,255,.5) 浅蓝填充 */
-  --win-accent-ring: var(--color-focus); /* #81adec 聚焦环 */
-  --win-radius: var(--radius-base); /* 6px */
-  --win-radius-sm: var(--radius-sm); /* 4px */
-  --win-shadow: var(--shadow-card);
-  --win-shadow-hover: var(--shadow-sm);
-  --win-font: var(--font-sans);
+   * 印坊风格检查器皮肤（右侧参数检查器专用，见 ParamPanel.vue）
+   * 仅作用于 .studio 内部，预览 / 弹窗不受影响。
+   * 复用整体主题 Token（--accent / --radius-* / --shadow-*）以保证视觉统一。
+   * ═════════════════════════════════════════════════════════════════ */
+  --studio-face: #f1ebde; /* 宣纸暖面 */
+  --studio-surface: #ffffff; /* 卡片 / 输入白底 */
+  --studio-surface-2: #f7f2e8; /* 悬停 / 选中浅底 */
+  --studio-border: #e6ddcc; /* 1px 描边 */
+  --studio-border-strong: #d6cab2;
+  --studio-text: #2b2620;
+  --studio-text-dim: #8c8071;
+  --studio-accent: var(--accent); /* 朱砂红 */
+  --studio-accent-strong: var(--accent-strong);
+  --studio-accent-soft: var(--accent-soft);
+  --studio-accent-ring: var(--accent-ring);
+  --studio-line: var(--accent); /* 区块标题下的朱砂细线 */
+  --studio-radius: var(--radius-sm); /* 3px */
+  --studio-radius-sm: var(--radius-xs); /* 2px */
+  --studio-shadow: var(--shadow-card);
+  --studio-shadow-hover: var(--shadow-sm);
+  --studio-font: var(--font-sans);
 }
 
 @media (min-resolution: 2dppx) {
@@ -199,25 +215,25 @@
   }
 }
 
-/* ══════════════════════════ 暗色模式（自动解析） ══════════════════════════ */
+/* ════════════════════════════ 暗色模式（自动解析） ══════════════════════════ */
 @media (prefers-color-scheme: dark) {
   :root {
-    /* 背景 */
-    --color-root: var(--gray-950);
-    --color-background: var(--gray-950);
-    --color-surface: var(--gray-900);
-    --color-cream: var(--gray-900);
-    --color-raised: var(--gray-950);
+    /* 背景：暖墨底 */
+    --color-root: #1c1813;
+    --color-background: #1c1813;
+    --color-surface: #2a241d;
+    --color-cream: #2a241d;
+    --color-raised: #1c1813;
 
     /* 前景 */
-    --color-foreground: var(--paper-100);
-    --color-off-black: #010101;
+    --color-foreground: #f1ebde;
+    --color-off-black: #fbf8f1;
     --color-muted: var(--gray-400);
-    --color-dark-gray: var(--gray-600);
+    --color-dark-gray: #b0a691;
 
     /* 边框 */
-    --color-border: var(--gray-800);
-    --color-border-dark: var(--gray-800);
+    --color-border: #3c372e;
+    --color-border-dark: #3c372e;
 
     /* 轮廓：暗色下切到 white 10% / 15% */
     --outline-card: rgba(255, 255, 255, 0.1);
@@ -240,22 +256,33 @@
 
     --shadow-card: 0 0 0 1px rgba(255, 255, 255, 0.1);
 
-    /* 现代 Windows / Fluent 皮肤 · 暗色（复用整体主题 token） */
-    --win-face: #2b2b2b;
-    --win-surface: #1f1f1f;
-    --win-surface-2: #2f2f2f;
-    --win-border: #3a3a3a;
-    --win-border-strong: #4a4a4a;
-    --win-text: #e8e8e8;
-    --win-text-dim: #b0b0b0;
-    --win-accent: var(--color-blue);
-    --win-accent-strong: var(--blue-500);
-    --win-accent-soft: rgba(129, 173, 236, 0.22);
-    --win-accent-ring: var(--color-focus);
-    --win-radius: var(--radius-base);
-    --win-radius-sm: var(--radius-sm);
-    --win-shadow: var(--shadow-card);
-    --win-shadow-hover: var(--shadow-sm);
-    --win-font: var(--font-sans);
+    /* 朱砂红在暗色下略提亮以保证对比 */
+    --accent: #e26451;
+    --accent-strong: #f07a66;
+    --accent-soft: rgba(226, 100, 81, 0.22);
+    --accent-ring: #e26451;
+    --color-blue: var(--accent);
+    --color-light-blue: #dd8a7c;
+    --color-focus: var(--accent-ring);
+    --color-selection: rgba(226, 100, 81, 0.34);
+
+    /* 印坊皮肤 · 暗色（复用整体主题 token） */
+    --studio-face: #241f18;
+    --studio-surface: #2e2820;
+    --studio-surface-2: #383029;
+    --studio-border: #3c372e;
+    --studio-border-strong: #4a4338;
+    --studio-text: #f1ebde;
+    --studio-text-dim: #b0a691;
+    --studio-accent: var(--accent);
+    --studio-accent-strong: var(--accent-strong);
+    --studio-accent-soft: rgba(226, 100, 81, 0.22);
+    --studio-accent-ring: var(--accent-ring);
+    --studio-line: var(--accent);
+    --studio-radius: var(--radius-sm);
+    --studio-radius-sm: var(--radius-xs);
+    --studio-shadow: var(--shadow-card);
+    --studio-shadow-hover: var(--shadow-sm);
+    --studio-font: var(--font-sans);
   }
 }

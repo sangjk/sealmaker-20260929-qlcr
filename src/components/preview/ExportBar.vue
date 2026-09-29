@@ -94,7 +94,7 @@ function onUnlock(): void {
   padding: var(--card-padding-compact);
   background-color: var(--color-surface);
   border-radius: var(--radius-base);
-  outline: 1px solid var(--outline-card);
+  outline: 1px solid var(--studio-border);
 }
 
 .export-bar__head {

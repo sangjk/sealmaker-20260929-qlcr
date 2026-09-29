@@ -118,7 +118,7 @@ jobs:
           name: '${{ github.ref_name }}'
           tag_name: '${{ github.ref_name }}'
           body: |
-            ## 印章生成器 ${{ github.ref_name }}
+            ## 印章制作软件 ${{ github.ref_name }}
 
             ### 包含文件
             - `seal-designer_*_x64-setup.exe` — Windows 安装包（NSIS，简体中文安装向导）
@@ -126,13 +126,13 @@ jobs:
 
             ### 应用商店身份
             > 以下 7 项与「项目需要信息.md」逐字一致，上传合作伙伴中心时用于核对包身份。
-            - Store ID: `9P693685R5MR`
-            - Package Family Name: `sangkl.30724BA61D061_fbnffa3ktn7mr`
-            - Package/Identity/Name: `sangkl.30724BA61D061`
-            - Package/Identity/Publisher: `CN=3F86E209-E919-4DFD-BBFE-3B881A180019`
-            - Package/Properties/PublisherDisplayName: `sangkl`
-            - MSA 应用 ID: `95d21e43-7bfa-4ec1-8747-d1d7726e1f58`
-            - Package SID: `S-1-15-2-436552469-1792244464-938760001-4261866467-1822193793-3105459662-3053413958`
+            - Store ID: `9MWTMQ6QXZCW`
+            - Package Family Name: `ziyoukaifazhe.20925F03B781E_qq8e3wx4y0064`
+            - Package/Identity/Name: `ziyoukaifazhe.20925F03B781E`
+            - Package/Identity/Publisher: `CN=B6B69D2F-F985-4638-A792-512943132392`
+            - Package/Properties/PublisherDisplayName: `ziyoukaifazhe`
+            - MSA 应用 ID: `3309f667-7b75-4ee9-88b7-a3504a31fe3b`
+            - Package SID: `S-1-15-2-3123509465-720285388-3420150334-478885300-2377535928-3193081959-2464276667`
           files: |
             src-tauri/target/release/bundle/nsis/*.exe
             src-tauri/target/release/bundle/msix/*.msix

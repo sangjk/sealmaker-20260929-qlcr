@@ -8,9 +8,7 @@ import {
   ABOUT_INTRO,
   ABOUT_OFFLINE,
   ABOUT_PRODUCT_LABEL,
-  ABOUT_TITLE,
   ABOUT_VERSION_LABEL,
-  APP_NAME,
   BTN_BACK,
   DISCLAIMER,
   DISCLAIMER_DESIGN,
@@ -34,8 +32,11 @@ interface AppInfoPayload {
   version: string;
 }
 
-/** 产品名（默认取本地常量，Rust 返回后覆盖）。 */
-const productName = ref<string>(APP_NAME);
+/** 产品名（本轮「印章制作软件」；Rust get_app_info 返回后覆盖为配置值）。 */
+const productName = ref<string>('印章制作软件');
+
+/** 品牌 Logo 资源地址（避免模板内使用 import.meta）。 */
+const logoUrl = `${import.meta.env.BASE_URL}brand-logo.png`;
 
 /** 版本号（读取失败时留空，不展示占位假数据）。 */
 const version = ref<string>('');
@@ -56,7 +57,16 @@ onMounted(async () => {
 
 <template>
   <div class="about">
-    <PaperCard :title="ABOUT_TITLE" class="about__card">
+    <PaperCard title="关于 印章制作软件" class="about__card">
+      <div class="about__brand">
+        <img
+          class="about__logo"
+          :src="logoUrl"
+          alt="印章制作软件 标志"
+          draggable="false"
+        />
+        <span class="about__brand-name">印章制作软件</span>
+      </div>
       <p class="about__intro">{{ ABOUT_INTRO }}</p>
       <p class="about__offline">{{ ABOUT_OFFLINE }}</p>
 
@@ -100,6 +110,30 @@ onMounted(async () => {
   width: 100%;
   max-width: 560px;
   align-self: flex-start;
+}
+
+.about__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.about__logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--studio-border);
+  background-color: var(--paper-50);
+}
+
+.about__brand-name {
+  font-size: var(--text-base);
+  line-height: var(--text-base-lh);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  color: var(--color-foreground);
 }
 
 .about__intro,
